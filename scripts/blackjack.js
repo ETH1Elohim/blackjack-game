@@ -1,13 +1,15 @@
+//* Initial Logic:
+
 let deck = [{}, {}, {}, ]
 
-// value
-// image 
+// value (ace = 11 || 1)
+// image of card
 // suit
 // {}
-//52
+// 52 cards total
+// randomize cards
 
-//radom
-
+// pop cards off deck into either player or dealer hands
 
 let player = [{}]
 
