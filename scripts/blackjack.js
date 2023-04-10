@@ -1,18 +1,6 @@
 //* Initial Logic:
 
-let deck = [{}, {}, {}, ]
-// value (ace = 11 || 1)
-// image of card
-// suit
-// {}
-// 52 cards total
-// randomize cards
-// pop cards off deck into either player or dealer hands
-
-let player = [{}]
-let dealer = [{}, {}]
-
-let cards = [
+let cardDeck = [
     { name: "2", value: 2, imgFile: 'images/2_of_clubs.png' },
     { name: "2", value: 2, imgFile: 'images/2_of_diamonds.png' },
     { name: "2", value: 2, imgFile: 'images/2_of_hearts.png' },
@@ -67,4 +55,30 @@ let cards = [
     { name: "ace", value: 1 || 11, imgFile: 'images/ace_of_spades.png' },
 ]
 
-document.querySelector
+let card = document.querySelector('.card')
+let points = document.querySelector('')
+let dealBtn = document.querySelector('#deal-button')
+let hitBtn = document.querySelector('#hit-button')
+let standBtn = document.querySelector('#stand-button')
+
+// pop card objects off deck into either player or dealer hands
+let player = []
+let dealer = []
+
+// add event listener to button, add a new image element w/ class="card"
+// append 2 new images to the #dealer-hand & the #player-hand
+
+let dealCards = (cards) =>{
+
+
+
+}
+
+
+dealBtn.addEventListener("click", (e)=>{
+
+
+})
+
+
+dealCards(cardDeck)
