@@ -127,7 +127,7 @@ dealBtn.addEventListener("click", (e)=>{
         //* ACE CONDITION:
         function handleAceValue(card) {
           return new Promise(resolve => {
-            delay(1000)
+            delay(3000)
             if (card.value === 1) {
                 if (confirm(`
                 Press "OK" if you want your Ace to be worth 11.
