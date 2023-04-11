@@ -129,7 +129,8 @@ dealBtn.addEventListener("click", (e)=>{
         function handleAceValue(card) {
           return new Promise(resolve => {
             if (card.value === 1) {
-                if (confirm(`Press "OK" if you want your Ace to be worth 11. \nPress "Cancel" if you want your Ace to be worth 1.`)){
+                if (confirm(`Press "OK" if you want your Ace to be worth 11. \nPress "Cancel" if you want your Ace to be worth 1.`))
+                {
                     card.value = 11
                 }
               }
@@ -198,10 +199,8 @@ hitBtn.addEventListener("click", async (e)=>{
      function handleAceValue(card) {
         return new Promise(resolve => {
           if (card.value === 1) {
-              if (confirm(`
-              Press "OK" if you want your Ace to be worth 11.
-              Press "Cancel" if you want your Ace to be worth 1.
-              `)){
+              if (confirm(`Press "OK" if you want your Ace to be worth 11.\nPress "Cancel" if you want your Ace to be worth 1.`))
+              {
                   card.value = 11
               }
             }
