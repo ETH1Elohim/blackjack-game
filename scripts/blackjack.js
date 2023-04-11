@@ -93,7 +93,6 @@ console.log(newCard3);
 let newCard4 = randomCard(cardDeck)
 console.log(newCard4);
 
-
 let newImg = document.createElement('img')
 newImg.setAttribute('class', 'card')
 newImg.setAttribute('src', newCard.imgFile)
@@ -114,6 +113,7 @@ let aceValueBtn = document.querySelector('#ace-value-button')
 
 dealBtn.addEventListener("click", (e)=>{
     console.log(e);
+
     let deal4 = ()=>{
         dealerHand.append(newImg)
         dealerHand.append(newImg2)
@@ -151,7 +151,9 @@ dealBtn.addEventListener("click", (e)=>{
             }
         }
         handleAceValueDealDealer(newCard)
+        if(newCard.value !== 11){
         handleAceValueDealDealer(newCard2)
+        }
 
         //dealer:
         dealerCurVal = newCard.value

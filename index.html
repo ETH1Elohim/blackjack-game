@@ -53,6 +53,7 @@
       background-color: bisque;
       border-radius: 1%;
       display: flex;
+      position: relative;
     }
     .table{
       display: flex;
@@ -104,6 +105,15 @@
       height: 100%;
       padding: 1px;
       border: 0px;
+      animation: deal-card 0.5s ease-in-out;
+    }
+    @keyframes deal-card {
+      0% {
+        transform: translateY(-200%);
+      }
+      100% {
+        transform: translateY(0%);
+      }
     }
     @media only screen and (max-width: 850px) {
       .table{
