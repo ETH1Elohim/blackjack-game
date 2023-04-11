@@ -71,12 +71,17 @@ let dealer = []
 
 // Random Card Function:
 let randomCard = (cards) =>{
-    const random = Math.floor(Math.random() * 51)
+
+    const randomIndex = Math.floor(Math.random() * cards.length);
+    const card = cards[randomIndex]
+    cards.splice(randomIndex, 1) // remove the card from the array
+    return card
+    // const random = Math.floor(Math.random() * 51)
     // let cardValue = cards[random].value // need to push to dealer/player points and add on to existing points
     // console.log(cardValue);
     // let cardImg = cards[random].imgFile // need to push new image to player/dealer hand
     // console.log(cardImg);
-    return cards[random] 
+    // return cards[random] 
 }   
 
 let newCard = randomCard(cardDeck)
@@ -204,12 +209,7 @@ hitBtn.addEventListener("click", async (e)=>{
             if(confirm("The bet is a push. No one wins. New game?")){
                 location.reload();
             }
-        } else if (playerPoints.innerHTML == 21 && dealerPoints.innerHTML > 19){
-            await delay(500);
-            if(confirm("Blackjack! You win! Play again?")){
-                location.reload();
-            }
-        }
+        } 
         else {
             document.querySelector('#hit-btn').disabled = true;
         }
@@ -248,7 +248,7 @@ standBtn.addEventListener("click", async (e)=>{
             if(confirm("The bet is a push. No one wins. New game?")){
                 location.reload();
             }
-        }
+        } 
     } 
 })
 
