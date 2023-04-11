@@ -61,11 +61,6 @@ let dealBtn = document.querySelector('#deal-button')
 let hitBtn = document.querySelector('#hit-button')
 let standBtn = document.querySelector('#stand-button')
 
-
-// pop card objects off deck into either player or dealer hands
-let player = []
-let dealer = []
-
 // add event listener to button, add a new image element w/ class="card"
 // append 2 new images to the #dealer-hand & the #player-hand
 
