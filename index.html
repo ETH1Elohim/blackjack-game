@@ -27,6 +27,7 @@
     .game{
       z-index: 15;
       width: 100vw;
+      flex-direction: column;
     }
     .player{
       color: black;
@@ -64,7 +65,8 @@
     }
     .message-box{
       font-size: xx-large;
-      color: rgb(0, 128, 21);
+      color: white;
+      padding: 10px;
     }
     #deal-button{
       margin: 5px;
@@ -98,10 +100,41 @@
     }
     .card{
       z-index: 20;
-      width: 15%;
+      /* width: 15%; */
       height: 100%;
       padding: 1px;
       border: 0px;
+    }
+    @media only screen and (max-width: 850px) {
+      .table{
+      display: flex;
+      flex-direction: column;
+      width: 80%;
+      height: 43%;
+      background-color: whitesmoke;
+      justify-content: space-around;
+      border-radius: 3%;
+    }
+    }
+    @media only screen and (max-height: 715px){
+      .table{
+      display: flex;
+      flex-direction: column;
+      width: 80%;
+      height: 53%;
+      background-color: whitesmoke;
+      justify-content: space-around;
+      border-radius: 3%;
+    }
+    }
+    @media only screen and (max-width: 450px){
+      .card{
+      z-index: 20;
+      /* width: 15%; */
+      height: 90%;
+      padding: 1px;
+      border: 0px;
+    }
     }
 
   </style>
@@ -113,8 +146,9 @@
         <img class="bg-image" src="https://wallpaperaccess.com/full/1765802.jpg" alt="">
       </div>
       <div class="game d-flex align-items-center justify-content-center">
+        <div class="message-box d-flex justify-content-center" id="messages">Blackjack</div>
         <div class="table">
-          <div class="message-box d-flex justify-content-center" id="messages">Blackjack</div>
+          
           <div class="player">
             <label class="player-name">Dealer: 
               <span id="dealer-points" class="points"></span>
