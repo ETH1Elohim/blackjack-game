@@ -1,5 +1,3 @@
-//* Initial Logic:
-
 let cardDeck = [
     { name: "2", value: 2, imgFile: 'images/2_of_clubs.png' },
     { name: "2", value: 2, imgFile: 'images/2_of_diamonds.png' },
@@ -53,10 +51,12 @@ let cardDeck = [
     { name: "ace", value: 1 || 11, imgFile: 'images/ace_of_diamonds.png' },
     { name: "ace", value: 1 || 11, imgFile: 'images/ace_of_hearts.png' },
     { name: "ace", value: 1 || 11, imgFile: 'images/ace_of_spades.png' },
-]
+];
 
-let card = document.querySelector('.card')
-let points = document.querySelector('')
+let dealerHand = document.querySelector('#dealer-hand')
+let playerHand = document.querySelector('#player-hand')
+let dealerPoints = document.querySelector('#dealer-points')
+let playerPoints = document.querySelector('#player-points')
 let dealBtn = document.querySelector('#deal-button')
 let hitBtn = document.querySelector('#hit-button')
 let standBtn = document.querySelector('#stand-button')
@@ -68,17 +68,109 @@ let dealer = []
 // add event listener to button, add a new image element w/ class="card"
 // append 2 new images to the #dealer-hand & the #player-hand
 
-let dealCards = (cards) =>{
+// Random Card Function:
+let randomCard = (cards) =>{
+    const random = Math.floor(Math.random() * 51)
+    // let cardValue = cards[random].value // need to push to dealer/player points and add on to existing points
+    // console.log(cardValue);
+    // let cardImg = cards[random].imgFile // need to push new image to player/dealer hand
+    // console.log(cardImg);
+    return cards[random] 
+}   
+
+let newCard = randomCard(cardDeck)
+console.log(newCard);
+let newCard2 = randomCard(cardDeck)
+console.log(newCard2);
+let newCard3 = randomCard(cardDeck)
+console.log(newCard3);
+let newCard4 = randomCard(cardDeck)
+console.log(newCard4);
 
 
+let newImg = document.createElement('img')
+newImg.setAttribute('class', 'card')
+newImg.setAttribute('src', newCard.imgFile)
+let newImg2 = document.createElement('img')
+newImg2.setAttribute('class', 'card')
+newImg2.setAttribute('src', newCard2.imgFile)
+let newImg3 = document.createElement('img')
+newImg3.setAttribute('class', 'card')
+newImg3.setAttribute('src', newCard3.imgFile)
+let newImg4 = document.createElement('img')
+newImg4.setAttribute('class', 'card')
+newImg4.setAttribute('src', newCard4.imgFile)
 
-}
-
+let dealerCurVal = 0;
+let playerCurVal = 0;
 
 dealBtn.addEventListener("click", (e)=>{
-
+    console.log(e);
+    let deal4 = ()=>{
+        dealerHand.append(newImg)
+        dealerHand.append(newImg2)
+        playerHand.append(newImg3)
+        playerHand.append(newImg4)
+    }
+    deal4()
+    let deal4points = ()=>{
+        //dealer:
+        dealerCurVal = newCard.value
+        dealerCurVal = dealerCurVal + newCard2.value 
+        console.log(dealerCurVal); 
+        dealerPoints.innerHTML = dealerCurVal
+        //player:
+        playerCurVal = newCard3.value
+        playerCurVal = playerCurVal + newCard4.value
+        console.log(playerCurVal);
+        playerPoints.innerHTML = playerCurVal
+    }
+    deal4points()
 
 })
 
+hitBtn.addEventListener("click", async (e)=>{
+    let hitCard = randomCard(cardDeck)
+    console.log(hitCard);
+    let hitCardImg = document.createElement('img')
+    hitCardImg.setAttribute('class', 'card')
+    hitCardImg.setAttribute('src', hitCard.imgFile)
+    playerHand.append(hitCardImg)
+    playerCurVal = playerCurVal + hitCard.value
+    playerPoints.innerHTML = playerCurVal
+    if(playerPoints.innerHTML > 21){
+        await delay(500);
+        if(confirm("Bust! You lost to the dealer. New game?")) {
+            location.reload(); // Reload the page if the user clicks "OK"
+        } else {
+            document.querySelector('#hit-btn').disabled = true;
+        }
+    }
+})
 
-dealCards(cardDeck)
+standBtn.addEventListener("click", async (e)=>{
+    console.log(e);
+    while (dealerCurVal < 17){
+        let newDealerCard = randomCard(cardDeck)
+        console.log(newDealerCard);
+        let newDealerCardImg = document.createElement('img')
+        newDealerCardImg.setAttribute('class', 'card')
+        newDealerCardImg.setAttribute('src', newDealerCard.imgFile)
+        dealerHand.append(newDealerCardImg)
+        dealerCurVal = dealerCurVal + newDealerCard.value
+        dealerPoints.innerHTML = dealerCurVal
+        if(dealerPoints.innerHTML > 21){
+            await delay(500);
+            if(confirm("The dealer busts. You Win! New game?")) {
+                location.reload(); // Reload the page if the user clicks "OK"
+            }
+        }
+    } 
+})
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+
