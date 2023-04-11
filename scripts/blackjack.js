@@ -163,6 +163,23 @@ dealBtn.addEventListener("click", (e)=>{
         playerCurVal = playerCurVal + newCard4.value
         console.log(playerCurVal);
         playerPoints.innerHTML = playerCurVal
+
+        if((dealerPoints.innerHTML == 21) && (playerPoints.innerHTML !== 21)){
+            await delay(500);
+            if(confirm("The Dealer has a Blackjack! You lost. New game?")) {
+            location.reload(); // Reload the page if the user clicks "OK"
+        } 
+        } else if((playerPoints.innerHTML == 21) && (dealerPoints.innerHTML !== 21)){
+            await delay(500);
+            if(confirm("Blackjack! You win! New game?")) {
+            location.reload(); // Reload the page if the user clicks "OK"
+        } 
+        } else if ((dealerPoints.innerHTML == 21) && (playerPoints.innerHTML == 21)){
+            await delay(500);
+            if(confirm("The bet is a push. No one wins. New game?")){
+                location.reload();
+            }
+        } 
     }
     deal4points()
     console.log(playerHand.innerHTML);
@@ -203,16 +220,15 @@ hitBtn.addEventListener("click", async (e)=>{
         await delay(500);
         if(confirm("Bust! You lost to the dealer. New game?")) {
             location.reload(); // Reload the page if the user clicks "OK"
-        } 
-        else if (dealerPoints.innerHTML == 21 && playerPoints.innerHTML == 21){
-            await delay(500);
-            if(confirm("The bet is a push. No one wins. New game?")){
-                location.reload();
-            }
-        } 
-        else {
+        } else {
             document.querySelector('#hit-btn').disabled = true;
         }
+    } 
+    else if(playerPoints.innerHTML == 21){
+        await delay(500);
+        if(confirm("Blackjack! You win! New game?")) {
+        location.reload(); // Reload the page if the user clicks "OK"
+    } 
     }
 })
 
@@ -233,22 +249,24 @@ standBtn.addEventListener("click", async (e)=>{
 
         dealerCurVal = dealerCurVal + newDealerCard.value
         dealerPoints.innerHTML = dealerCurVal
-        if(dealerPoints.innerHTML > 21){
+        
+        if(dealerPoints.innerHTML == 21){
+            await delay(500);
+            if(confirm("The Dealer has a Blackjack! You lost. New game?")) {
+            location.reload(); // Reload the page if the user clicks "OK"
+        } 
+        } else if(dealerPoints.innerHTML > 21){
             await delay(500);
             if(confirm("The dealer busts. You Win! New game?")) {
                 location.reload(); // Reload the page if the user clicks "OK"
             }
-        } else if ((dealerPoints.innerHTML == playerPoints.innerHTML) && (dealerPoints.innerHTML > 16 && playerPoints.innerHTML > 16)){
-            await delay(500);
-            if(confirm("The bet is a push. No one wins. New game?")){
-                location.reload();
-            }
-        } else if (dealerPoints.innerHTML == 21 && playerPoints.innerHTML == 21){
-            await delay(500);
-            if(confirm("The bet is a push. No one wins. New game?")){
-                location.reload();
-            }
         } 
+    } 
+    if ((dealerPoints.innerHTML == playerPoints.innerHTML) && (dealerPoints.innerHTML > 16 && playerPoints.innerHTML > 16)){
+        await delay(500);
+        if(confirm("The bet is a push. No one wins. New game?")){
+            location.reload();
+        }
     } 
 })
 
@@ -256,6 +274,3 @@ standBtn.addEventListener("click", async (e)=>{
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-
-
