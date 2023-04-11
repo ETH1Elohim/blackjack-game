@@ -129,10 +129,7 @@ dealBtn.addEventListener("click", (e)=>{
         function handleAceValue(card) {
           return new Promise(resolve => {
             if (card.value === 1) {
-                if (confirm(`
-                Press "OK" if you want your Ace to be worth 11.
-                Press "Cancel" if you want your Ace to be worth 1.
-                `)){
+                if (confirm(`Press "OK" if you want your Ace to be worth 11. \nPress "Cancel" if you want your Ace to be worth 1.`)){
                     card.value = 11
                 }
               }
@@ -141,9 +138,8 @@ dealBtn.addEventListener("click", (e)=>{
         }
         
         // call the function with the cards
-        await delay(500)
+        await delay(250)
         await handleAceValue(newCard3);
-        await delay(500)
         await handleAceValue(newCard4);
 
         function handleAceValueDealDealer(card){
@@ -214,7 +210,7 @@ hitBtn.addEventListener("click", async (e)=>{
       }
       
       // call the function with the cards
-      await delay(50)
+      await delay(250)
       await handleAceValue(hitCard);
 
     playerCurVal = playerCurVal + hitCard.value
