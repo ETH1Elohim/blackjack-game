@@ -47,10 +47,10 @@ let cardDeck = [
     { name: "king", value: 10, imgFile: 'images/king_of_diamonds.png' },
     { name: "king", value: 10, imgFile: 'images/king_of_hearts.png' },
     { name: "king", value: 10, imgFile: 'images/king_of_spades.png' },
-    { name: "ace", value: 1 || 11, imgFile: 'images/ace_of_clubs.png' },
-    { name: "ace", value: 1 || 11, imgFile: 'images/ace_of_diamonds.png' },
-    { name: "ace", value: 1 || 11, imgFile: 'images/ace_of_hearts.png' },
-    { name: "ace", value: 1 || 11, imgFile: 'images/ace_of_spades.png' },
+    { name: "ace", value: 1, imgFile: 'images/ace_of_clubs.png' },
+    { name: "ace", value: 1, imgFile: 'images/ace_of_diamonds.png' },
+    { name: "ace", value: 1, imgFile: 'images/ace_of_hearts.png' },
+    { name: "ace", value: 1, imgFile: 'images/ace_of_spades.png' },
 ];
 
 let dealerHand = document.querySelector('#dealer-hand')
@@ -60,6 +60,7 @@ let playerPoints = document.querySelector('#player-points')
 let dealBtn = document.querySelector('#deal-button')
 let hitBtn = document.querySelector('#hit-button')
 let standBtn = document.querySelector('#stand-button')
+
 
 // pop card objects off deck into either player or dealer hands
 let player = []
@@ -104,6 +105,8 @@ newImg4.setAttribute('src', newCard4.imgFile)
 let dealerCurVal = 0;
 let playerCurVal = 0;
 
+let aceValueBtn = document.querySelector('#ace-value-button')
+
 dealBtn.addEventListener("click", (e)=>{
     console.log(e);
     let deal4 = ()=>{
@@ -112,8 +115,39 @@ dealBtn.addEventListener("click", (e)=>{
         playerHand.append(newImg3)
         playerHand.append(newImg4)
     }
+
     deal4()
-    let deal4points = ()=>{
+    let deal4points = async ()=>{
+
+        //* ACE CONDITION:
+        function handleAceValue(card) {
+          return new Promise(resolve => {
+            if (card.value === 1) {
+                if (confirm(`
+                Press "OK" if you want your Ace to be worth 11.
+                Press "Cancel" if you want your Ace to be worth 1.
+                `)){
+                    card.value = 11
+                }
+              }
+            resolve(card)
+          })
+        }
+        
+        // call the function with the cards
+        await delay(50)
+        await handleAceValue(newCard3);
+        await delay(50)
+        await handleAceValue(newCard4);
+
+        function handleAceValueDealDealer(card){
+            if (card.value === 1){
+                card.value = 11 //makes dealer's ace worth 11 if dealed in 1st 2 cards
+            }
+        }
+        handleAceValueDealDealer(newCard)
+        handleAceValueDealDealer(newCard2)
+
         //dealer:
         dealerCurVal = newCard.value
         dealerCurVal = dealerCurVal + newCard2.value 
@@ -126,23 +160,57 @@ dealBtn.addEventListener("click", (e)=>{
         playerPoints.innerHTML = playerCurVal
     }
     deal4points()
+    console.log(playerHand.innerHTML);
 
 })
 
 hitBtn.addEventListener("click", async (e)=>{
+    await delay(370);
     let hitCard = randomCard(cardDeck)
     console.log(hitCard);
     let hitCardImg = document.createElement('img')
     hitCardImg.setAttribute('class', 'card')
     hitCardImg.setAttribute('src', hitCard.imgFile)
     playerHand.append(hitCardImg)
+
+     //* ACE CONDITION:
+     function handleAceValue(card) {
+        return new Promise(resolve => {
+          if (card.value === 1) {
+              if (confirm(`
+              Press "OK" if you want your Ace to be worth 11.
+              Press "Cancel" if you want your Ace to be worth 1.
+              `)){
+                  card.value = 11
+              }
+            }
+          resolve(card)
+        })
+      }
+      
+      // call the function with the cards
+      await delay(50)
+      await handleAceValue(hitCard);
+
     playerCurVal = playerCurVal + hitCard.value
     playerPoints.innerHTML = playerCurVal
     if(playerPoints.innerHTML > 21){
         await delay(500);
         if(confirm("Bust! You lost to the dealer. New game?")) {
             location.reload(); // Reload the page if the user clicks "OK"
-        } else {
+        } 
+        else if (dealerPoints.innerHTML == 21 && playerPoints.innerHTML == 21){
+            await delay(500);
+            if(confirm("The bet is a push. No one wins. New game?")){
+                location.reload();
+            }
+        } else if (playerPoints.innerHTML == 21 && dealerPoints.innerHTML > 19){
+            await delay(500);
+            if(confirm("Blackjack! You win! Play again?")){
+                location.reload();
+            }
+        }
+        else {
             document.querySelector('#hit-btn').disabled = true;
         }
     }
@@ -150,13 +218,19 @@ hitBtn.addEventListener("click", async (e)=>{
 
 standBtn.addEventListener("click", async (e)=>{
     console.log(e);
-    while (dealerCurVal < 17){
+    while ((dealerCurVal < 17) || (dealerCurVal < playerCurVal)){
+        await delay(370);
         let newDealerCard = randomCard(cardDeck)
         console.log(newDealerCard);
         let newDealerCardImg = document.createElement('img')
         newDealerCardImg.setAttribute('class', 'card')
         newDealerCardImg.setAttribute('src', newDealerCard.imgFile)
         dealerHand.append(newDealerCardImg)
+
+        if ((dealerPoints.innerHTML < 11) && (newDealerCard.value === 1)){
+            newDealerCard.value = 11 //sets dealer's ace value to 11 if it won't lead to a bust
+        }
+
         dealerCurVal = dealerCurVal + newDealerCard.value
         dealerPoints.innerHTML = dealerCurVal
         if(dealerPoints.innerHTML > 21){
@@ -164,9 +238,20 @@ standBtn.addEventListener("click", async (e)=>{
             if(confirm("The dealer busts. You Win! New game?")) {
                 location.reload(); // Reload the page if the user clicks "OK"
             }
+        } else if ((dealerPoints.innerHTML == playerPoints.innerHTML) && (dealerPoints.innerHTML > 16 && playerPoints.innerHTML > 16)){
+            await delay(500);
+            if(confirm("The bet is a push. No one wins. New game?")){
+                location.reload();
+            }
+        } else if (dealerPoints.innerHTML == 21 && playerPoints.innerHTML == 21){
+            await delay(500);
+            if(confirm("The bet is a push. No one wins. New game?")){
+                location.reload();
+            }
         }
     } 
 })
+
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
