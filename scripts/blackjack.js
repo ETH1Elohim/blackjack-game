@@ -93,6 +93,7 @@ console.log(newCard3);
 let newCard4 = randomCard(cardDeck)
 console.log(newCard4);
 
+
 let newImg = document.createElement('img')
 newImg.setAttribute('class', 'card')
 newImg.setAttribute('src', newCard.imgFile)
@@ -127,7 +128,6 @@ dealBtn.addEventListener("click", (e)=>{
         //* ACE CONDITION:
         function handleAceValue(card) {
           return new Promise(resolve => {
-            delay(3000)
             if (card.value === 1) {
                 if (confirm(`
                 Press "OK" if you want your Ace to be worth 11.
@@ -141,9 +141,9 @@ dealBtn.addEventListener("click", (e)=>{
         }
         
         // call the function with the cards
-        await delay(50)
+        await delay(500)
         await handleAceValue(newCard3);
-        await delay(50)
+        await delay(500)
         await handleAceValue(newCard4);
 
         function handleAceValueDealDealer(card){
