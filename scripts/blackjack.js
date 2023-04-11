@@ -126,41 +126,25 @@ dealBtn.addEventListener("click", (e)=>{
     let deal4points = async ()=>{
 
         //* ACE CONDITION:
-        async function handleAceValue(card) {
-            let isMobile = window.matchMedia("(max-width: 767px)").matches;
-            let popupWidth = isMobile ? "80%" : "400px";
-            let popupHeight = isMobile ? "auto" : "300px";
-            let confirmResult = false;
-            
+        function handleAceValue(card) {
+          return new Promise(resolve => {
             if (card.value === 1) {
-              confirmResult = await Swal.fire({
-                title: "Ace Value",
-                html: `
-                  <div style="width: ${popupWidth}; height: ${popupHeight}">
-                    Press "OK" if you want your Ace to be worth 11.<br>
-                    Press "Cancel" if you want your Ace to be worth 1.
-                  </div>
-                `,
-                showCancelButton: true,
-                confirmButtonText: "OK",
-                cancelButtonText: "Cancel",
-                backdrop: isMobile ? false : true
-              });
-              
-              if (confirmResult.isConfirmed) {
-                card.value = 11;
+                if (confirm(`
+                Press "OK" if you want your Ace to be worth 11.
+                Press "Cancel" if you want your Ace to be worth 1.
+                `)){
+                    card.value = 11
+                }
               }
-            }
-            
-            return card;
-          }
-          
-          // call the function with the cards
-          await delay(500);
-          await handleAceValue(newCard3);
-          await delay(500);
-          await handleAceValue(newCard4);
-          
+            resolve(card)
+          })
+        }
+        
+        // call the function with the cards
+        await delay(500)
+        await handleAceValue(newCard3);
+        await delay(500)
+        await handleAceValue(newCard4);
 
         function handleAceValueDealDealer(card){
             if (card.value === 1){
