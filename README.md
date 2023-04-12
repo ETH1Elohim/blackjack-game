@@ -1,5 +1,6 @@
 # Blackjack
-https://ethanblackjack.netlify.app/
+Link: https://ethanblackjack.netlify.app/
+
 ![alt text](./images/in_game_screenshot.png)
 
 
